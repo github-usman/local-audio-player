@@ -1,13 +1,12 @@
-
-import AudioPlay from './component/AudioPlay';
+import AudioPlay from "./Func/AudioPlay"
 
 
 function App() {
-  return (
-    <div className="App">
-      <AudioPlay/>
-    </div>
-  );
+	return (
+		<div className="App">
+			<AudioPlay />
+		</div>
+	)
 }
 
-export default App;
+export default App
