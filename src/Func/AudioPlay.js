@@ -56,25 +56,32 @@ function AudioPlay() {
 			}
 		}
 	}
-
+	const handleDeleteAllAudios = () => {
+		localStorage.removeItem('storedAudios')
+		localStorage.removeItem('playingAudioInfo')
+		setAudios([])
+	}
 	return (
 		<div className="container">
-			{audios.map((audio, index) => (
+			{audios.length>0 ? audios.map((audio, index) => (
 				<div key={index}>
-				
-						<div className="w-100 bg-dark p-3">
-							<audio
-								controls
-								src={audio}
-								onEnded={() => handleAudioEnded(index)}
-								onTimeUpdate={handleTimeUpdate(index)}
-							/>
-						</div>
-					
+					<div className="w-100 bg-dark p-3">
+						<audio
+							controls
+							src={audio}
+							onEnded={() => handleAudioEnded(index)}
+							onTimeUpdate={handleTimeUpdate(index)}
+						/>
+					</div>
 				</div>
-			))}
+			)):<h2>Please Upload some audio to play</h2>}
 			<input type="file" onChange={addFile} />
-			<h3 className='mt-5'>Currently Working on Design Part All funtionality is working fine</h3>
+			<h3 className="mt-5">
+				Currently Working on Design Part All funtionality is working fine
+			</h3>
+			<button className="btn btn-primary mt-3" onClick={handleDeleteAllAudios}>
+				Delete all audio
+			</button>
 		</div>
 	)
 }
