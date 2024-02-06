@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 
 function AudioPlay() {
 	const [audios, setAudios] = useState([])
-	const [ind, setInd] = useState(null)
 
 	useEffect(() => {
 		const storedAudios = JSON.parse(localStorage.getItem('storedAudios'))
@@ -15,20 +14,17 @@ function AudioPlay() {
 		const currentAudioInfo = JSON.parse(
 			localStorage.getItem('playingAudioInfo'),
 		)
-		if(currentAudioInfo){
+		if (currentAudioInfo) {
+			const audioElement =
+				document.getElementsByTagName('audio')[currentAudioInfo[0]]
 
-			const audioElement = document.getElementsByTagName('audio')[currentAudioInfo[0]];
-			console.log(currentAudioInfo[1],'vaoues');
-			if(audioElement){
-				console.log('value',currentAudioInfo[1])
-				audioElement.currentTime = currentAudioInfo[1];
-				// setInd(currentAudioInfo[0]);
+			if (audioElement) {
+				audioElement.currentTime = currentAudioInfo[1]
 			}
 		}
 	}, [audios])
 
 	const handleTimeUpdate = (index) => (event) => {
-		console.log(event.target.currentTime, ' index  ->', index)
 		localStorage.setItem(
 			'playingAudioInfo',
 			JSON.stringify([index, event.target.currentTime]),
@@ -40,7 +36,7 @@ function AudioPlay() {
 		if (e.target.files[0]) {
 			const newAudio = URL.createObjectURL(e.target.files[0])
 			setAudios([...audios, newAudio])
-			console.log(audios.length, ' = length')
+
 			localStorage.setItem(
 				'storedAudios',
 				JSON.stringify([...audios, newAudio]),
@@ -60,55 +56,25 @@ function AudioPlay() {
 			}
 		}
 	}
-	const handlPlay = (index) => {
-		setInd(index);
-		console.log("here index", index);
-	  }
-	  
-	  useEffect(() => {
-		if (ind !== null) {
-		  const audioElement = document.getElementsByTagName('audio')[ind];
-		  const currentAudioInfo = JSON.parse(
-			localStorage.getItem('playingAudioInfo'),
-		)
-		  if(currentAudioInfo){
-
-			  audioElement.currentTime = currentAudioInfo[1];
-		  }
-		  audioElement.play();
-		}
-	  }, [ind]);
-	  
 
 	return (
-		<div className='container'>
+		<div className="container">
 			{audios.map((audio, index) => (
-				<div key={index} >
-					{
-
-						ind === index ?
-						<div className='w-100 bg-success '>
-						<audio
-						controls
-						src={audio}
-						onEnded={() => handleAudioEnded(index)}
-						onTimeUpdate={handleTimeUpdate(index)}
-						onPlay={() => handlPlay(index)} 
-					   />
-					</div>
-					:
-					<audio
-						controls
-						src={audio}
-						onEnded={() => handleAudioEnded(index)}
-						onTimeUpdate={handleTimeUpdate(index)}
-						onPlay={() => handlPlay(index)} 
-					/>
-					}
+				<div key={index}>
+				
+						<div className="w-100 bg-dark p-3">
+							<audio
+								controls
+								src={audio}
+								onEnded={() => handleAudioEnded(index)}
+								onTimeUpdate={handleTimeUpdate(index)}
+							/>
+						</div>
 					
 				</div>
 			))}
 			<input type="file" onChange={addFile} />
+			<h3 className='mt-5'>Currently Working on Design Part All funtionality is working fine</h3>
 		</div>
 	)
 }

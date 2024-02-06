@@ -1,5 +1,4 @@
-import AudioPlay from "./Func/AudioPlay"
-
+import AudioPlay from './Func/AudioPlay'
 
 function App() {
 	return (
